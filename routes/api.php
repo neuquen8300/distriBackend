@@ -22,6 +22,11 @@ Route::middleware('api')->group(function(){
 
 
 /*
+    Login
+*/
+
+Route::post('/login', 'LoginController@login');
+/*
     Clients
 */
 Route::get('/clients', "ClientController@getClients");
