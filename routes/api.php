@@ -15,13 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::post('/login', 'AuthController@login');
 
-Route::middleware('auth:api')->group(function(){
 
-/*
-    Login
-*/
+Route::middleware(['auth:api'])->group(function(){
+
 /*
     Clients
 */
@@ -90,3 +87,4 @@ Route::get('/getSellers', 'SellerController@getSingleSeller');
 Route::post('/addSeller', 'SellerController@addSeller');
 
 });
+Route::post('/login', 'AuthController@login');
