@@ -43,7 +43,7 @@ class OrderController extends Controller
             return response('ok'); 
 
         } catch (Exception $e) {
-            return response('Hubo un error, por favor vuelva a intentarlo', 400);
+            return response('Hubo un error: '. $e, 400);
         }
     }
 
