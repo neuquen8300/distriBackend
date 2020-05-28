@@ -41,7 +41,9 @@ class OrderController extends Controller
 
             $newOrder->save();
 
-            return response('ok'); 
+            return response()->json([
+                'status' => 'ok'
+            ]); 
 
         } catch (Exception $e) {
             return response('Hubo un error: '. $e, 400);

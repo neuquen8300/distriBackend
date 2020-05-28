@@ -31,6 +31,7 @@ class AuthController extends Controller
                 'access_token' => $token->accessToken,
                 'role' => $user->role_id
             ], 200);
+            
         } else {
             return response('invalid request', 401);
         }
