@@ -28,14 +28,15 @@ class OrderController extends Controller
 
     }
     public function addOrder(ValidateNewOrder $request){
-        //Arreglando bugs
+        
         $order = $request->validated();
+
         try{
             $newOrder = new Order();
             $newOrder->client_id = $order['client_id'];
             $newOrder->products = $order['products'];
             $newOrder->seller_id = $order['seller_id'];
-            $newOrder->paymentMethod_id = 1;//$order['paymentMethod_id'];
+            $newOrder->paymentMethod_id = 1; // Agregar a futuro $order['paymentMethod_id'];
             $newOrder->active = 1;
 
             $newOrder->save();

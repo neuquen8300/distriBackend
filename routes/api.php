@@ -54,7 +54,7 @@ Route::post('/addOffer', 'OfferController@addOffer');
     Orders
 */
 
-Route::get('/orders', "ClientController@getOrders");
+Route::get('/orders', "OrderController@getOrders");
 Route::get('/order/{id}', "OrderController@getSingleOrder");
 Route::get('/search/orders/{search}', 'OrderController@getOrderSearch');
 Route::post('/addOrder', 'OrderController@addOrder');
