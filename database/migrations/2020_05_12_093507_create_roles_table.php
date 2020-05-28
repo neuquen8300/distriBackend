@@ -17,7 +17,9 @@ class CreateRolesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name', 64);
+            $table->unsignedTinyInteger('active');
         });
+
     }
 
     /**

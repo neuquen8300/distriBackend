@@ -4,39 +4,38 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Exception\BadResponseException;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     public function login(Request $request){
 
-        /*
-        
-        Se añaden el secret y el id de cliente a la petición http
+        // Se valida el request. No es necesario un request propio siendo
+        // que son 2 parametros nomas. 
 
-        */ 
-        $http = new \GuzzleHttp\Client;
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
 
-        try {
-            $response = $http->post(config('services.passport.login_endpoint'), [
-                'form_params' => [
-                    'grant_type' => 'password',
-                    'client_id' => config('services.passport.client_id'),
-                    'client_secret' => config('services.passport.client_secret'),
-                    'username' => $request->username,
-                    'password' => $request->password
-                ]
-            ]);
-            return $response->getBody();
-        } catch (BadResponseException $e){
-            if ($e->getCode() === 400) {
-                return response()->json('Request inválido. Ingresá usuario y contraseña.', $e->getCode());
-            } else if ($e->getCode() === 401) {
-                return response()->json('Las credenciales no son válidas, por favor intentá de nuevo.', $e->getCode());
-            }
+        /* 
+            Intentamos autenticar, si es válida la combinación [user, password], 
+            traemos el usuario con su respectivo rol y le otorgamos un token.
+            Caso contrario, 401.
+        */
+        if (Auth::attempt(['email' => $request->email, 'password' => $request['password']])){
+            $user = Auth::user();
+            $token = $user->createToken($user->email . '-' . now());
 
-            return response()->json('Problemas técnicos, volvé a intentarlo en 5 minutos.', $e->getCode());
+            return response()->json([
+                'access_token' => $token->accessToken,
+                'role' => $user->role_id
+            ], 200);
+        } else {
+            return response('invalid request', 401);
         }
     }
+
     public function logout(Request $request){
         auth()->user()->tokens->each(function($token, $key){
             $token->delete();
