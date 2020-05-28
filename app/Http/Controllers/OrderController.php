@@ -35,7 +35,7 @@ class OrderController extends Controller
             $newOrder->client_id = $order['client_id'];
             $newOrder->products = $order['products'];
             $newOrder->seller_id = $order['seller_id'];
-            //$newOrder->paymentMethod_id = $order['paymentMethod_id'];
+            $newOrder->paymentMethod_id = 1;//$order['paymentMethod_id'];
             $newOrder->active = 1;
 
             $newOrder->save();
