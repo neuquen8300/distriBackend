@@ -6,6 +6,8 @@ use App\Http\Requests\UpdateOrder;
 use App\Http\Requests\ValidateNewOrder;
 use Illuminate\Http\Request;
 use App\Order;
+use Exception;
+
 class OrderController extends Controller
 {
     public function getOrders(){
@@ -28,17 +30,21 @@ class OrderController extends Controller
     public function addOrder(ValidateNewOrder $request){
         
         $order = $request->validated();
+        try{
+            $newOrder = new Order();
+            $newOrder->client_id = $order['client_id'];
+            $newOrder->products = $order['products'];
+            $newOrder->seller_id = $order['seller_id'];
+            $newOrder->paymentMethod_id = $order['paymentMethod_id'];
+            $newOrder->active = 1;
 
-        $newOrder = new Order();
-        $newOrder->client_id = $order['client_id'];
-        $newOrder->products = $order['products'];
-        $newOrder->seller_id = $order['seller_id'];
-        $newOrder->paymentMethod_id = $order['paymentMethod_id'];
-        $newOrder->active = 1;
+            $newOrder->save();
 
-        $newOrder->save();
+            return response('ok'); 
 
-        return response('ok');
+        } catch (Exception $e) {
+            return response('Hubo un error, por favor vuelva a intentarlo', 400);
+        }
     }
 
     public function updateOrder(UpdateOrder $request, $id){

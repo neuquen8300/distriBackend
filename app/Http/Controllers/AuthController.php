@@ -8,6 +8,12 @@ use GuzzleHttp\Exception\BadResponseException;
 class AuthController extends Controller
 {
     public function login(Request $request){
+
+        /*
+        
+        Se añaden el secret y el id de cliente a la petición http
+
+        */ 
         $http = new \GuzzleHttp\Client;
 
         try {

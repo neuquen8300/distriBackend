@@ -25,9 +25,9 @@ class ValidateNewOrder extends FormRequest
     {
         return [
             'client_id' => ['required'],
-            'product_id' => ['required'],
-            'seller_id' => ['required'],
-            'subtotal' => ['required']
+            'products' => ['required'],
+            'paymentMethod_id' => ['nullable'],
+            'seller_id' => ['required']
         ];
     }
 }

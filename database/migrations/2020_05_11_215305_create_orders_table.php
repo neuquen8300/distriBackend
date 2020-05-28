@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedInteger("client_id");
-            $table->unsignedInteger("products");
+            $table->json("products");
             $table->unsignedInteger("seller_id");
             $table->unsignedInteger("paymentMethod_id");
             $table->unsignedTinyInteger('active');
